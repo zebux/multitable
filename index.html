@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="Générateur statique d'exercices de multiplications : choisissez vos tables, entraînez-vous et corrigez en deux étapes."
+    />
+    <title>Multi Tables — Entraînement aux multiplications</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu principal</a>
+
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">×</span>
+          <div>
+            <h1>Multi Tables</h1>
+            <p>Entraînement aux multiplications</p>
+          </div>
+        </div>
+        <p class="tagline" id="view-subtitle">
+          Choisissez vos tables et générez une série d'exercices.
+        </p>
+      </header>
+
+      <main id="main">
+        <!-- Vue 1 : configuration de la série -->
+        <section
+          id="config-view"
+          class="view view--config"
+          aria-labelledby="config-title"
+        >
+          <div class="card hero-card">
+            <p class="eyebrow">Étape 1 sur 2</p>
+            <h2 id="config-title">Préparer ma séance</h2>
+            <p>
+              Sélectionnez une ou plusieurs tables, choisissez le nombre
+              d'opérations, puis lancez la génération.
+            </p>
+          </div>
+
+          <form id="config-form" novalidate>
+            <fieldset class="card">
+              <legend>1. Tables à réviser</legend>
+              <p class="hint" id="tables-hint">
+                Les tables de 1 à 10 sont sélectionnées par défaut. Chaque
+                table est multipliée par les nombres de 1 à 10.
+              </p>
+
+              <div
+                class="table-grid"
+                id="basic-tables"
+                aria-describedby="tables-hint"
+              ></div>
+
+              <div class="selection-actions">
+                <button
+                  class="button button--secondary"
+                  type="button"
+                  id="toggle-advanced"
+                  aria-expanded="false"
+                  aria-controls="advanced-tables"
+                >
+                  Afficher les tables avancées
+                </button>
+                <button
+                  class="button button--secondary button--small"
+                  type="button"
+                  id="select-all"
+                >
+                  Tout cocher
+                </button>
+                <button
+                  class="button button--secondary button--small"
+                  type="button"
+                  id="clear-all"
+                >
+                  Tout décocher
+                </button>
+              </div>
+
+              <div
+                class="table-grid table-grid--advanced"
+                id="advanced-tables"
+                aria-label="Tables avancées de 11 à 20"
+                hidden
+              ></div>
+
+              <p class="selection-count" id="selection-count" aria-live="polite">
+                10 tables sélectionnées
+              </p>
+            </fieldset>
+
+            <fieldset class="card">
+              <legend>2. Nombre d'opérations</legend>
+              <div class="number-field">
+                <label for="operation-count">Combien d'exercices ?</label>
+                <input
+                  class="count-input"
+                  type="number"
+                  id="operation-count"
+                  name="operationCount"
+                  min="10"
+                  max="200"
+                  step="1"
+                  value="40"
+                  inputmode="numeric"
+                  enterkeyhint="go"
+                  required
+                />
+              </div>
+              <p class="hint">
+                Choisissez un nombre entre 10 et 200. Les opérations sont
+                uniques, même si leur ordre peut changer.
+              </p>
+            </fieldset>
+
+            <p
+              class="message message--error"
+              id="config-error"
+              role="alert"
+              hidden
+            ></p>
+
+            <button
+              class="button button--primary button--xl generate-button"
+              type="submit"
+              id="generate-button"
+            >
+              Générer les exercices <span aria-hidden="true">→</span>
+            </button>
+          </form>
+        </section>
+
+        <!-- Vue 2 : exercices et correction -->
+        <section
+          id="exercise-view"
+          class="view view--exercises"
+          aria-labelledby="exercise-title"
+          hidden
+        >
+          <div class="card exercise-toolbar">
+            <div>
+              <p class="eyebrow">Étape 2 sur 2</p>
+              <h2 id="exercise-title">Mes exercices</h2>
+              <p class="hint" id="series-summary"></p>
+              <p class="progress" id="exercise-progress"></p>
+            </div>
+            <div class="toolbar-actions">
+              <button
+                class="button button--secondary"
+                type="button"
+                id="restart-button"
+              >
+                Recommencer
+              </button>
+              <button
+                class="button button--secondary"
+                type="button"
+                id="back-button"
+              >
+                Retour à la configuration
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="card score-panel"
+            id="score-panel"
+            aria-live="polite"
+            hidden
+          >
+            <h3 id="score-title">Résultat provisoire</h3>
+            <p class="hint" id="score-message"></p>
+            <dl class="score-stats">
+              <div>
+                <dt>Total</dt>
+                <dd id="score-total">0</dd>
+              </div>
+              <div>
+                <dt>Réussites</dt>
+                <dd id="score-correct">0</dd>
+              </div>
+              <div>
+                <dt>Erreurs</dt>
+                <dd id="score-errors">0</dd>
+              </div>
+              <div>
+                <dt>Pourcentage</dt>
+                <dd id="score-percent">0 %</dd>
+              </div>
+            </dl>
+            <p class="congrats" id="congrats" hidden>
+              Bravo, 100 % de bonnes réponses ! Félicitations !
+            </p>
+          </div>
+
+          <div class="exercise-grid" id="exercise-list"></div>
+
+          <div class="card action-bar">
+            <p class="hint" id="correction-hint">
+              Répondez à tous les exercices, puis cliquez sur Corriger. Vous
+              pourrez modifier vos réponses après la première correction.
+            </p>
+            <button
+              class="button button--primary button--xl check-button"
+              type="button"
+              id="check-button"
+            >
+              Corriger
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <p>Application statique — aucun compte, aucun serveur, aucune donnée envoyée.</p>
+      </footer>
+    </div>
+  </body>
+</html>
