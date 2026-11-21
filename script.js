@@ -409,11 +409,6 @@
     number.className = "exercise-number";
     number.textContent = String(index + 1);
 
-    const label = document.createElement("label");
-    label.className = "exercise-question";
-    label.htmlFor = `answer-${index}`;
-    label.textContent = `${operation.factor} × ${operation.multiplier} =`;
-
     const input = document.createElement("input");
     input.type = "number";
     input.id = `answer-${index}`;
@@ -426,12 +421,20 @@
     input.autocomplete = "off";
     input.required = true;
 
+    const expression = document.createElement("span");
+    expression.textContent = `${operation.factor} × ${operation.multiplier} =`;
+
+    const label = document.createElement("label");
+    label.className = "exercise-question";
+    label.htmlFor = input.id;
+    label.append(expression, input);
+
     const feedback = document.createElement("p");
     feedback.className = "exercise-feedback";
     feedback.id = `feedback-${index}`;
     feedback.hidden = true;
 
-    card.append(number, label, input, feedback);
+    card.append(number, label, feedback);
     return card;
   }
 

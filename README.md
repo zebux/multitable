@@ -12,7 +12,9 @@ données, ni dépendance externe.
 - Le bouton **Afficher les tables avancées** révèle les tables de **11 à 20**.
 - Une ou plusieurs tables peuvent être sélectionnées, y compris toutes les tables.
 - Les boutons **Tout cocher** et **Tout décocher** agissent sur les 20 tables.
-- Le nombre d'opérations est réglable de **10 à 200** (valeur initiale : **40**).
+- Le nombre d'opérations est réglable de **10 à 200** (valeur initiale : **20**).
+- Les tables sont présentées en deux colonnes : 1 à 5 puis 6 à 10, et 11 à 15
+  puis 16 à 20 pour les tables avancées.
 
 Une table sélectionnée `n` produit les opérations `n × 1` à `n × 10`.
 Si les tables 2 et 4 sont sélectionnées, `2 × 4` et `4 × 2` sont donc deux
@@ -29,6 +31,8 @@ opérations distinctes et peuvent toutes deux apparaître.
 
 ### 3. Saisie
 
+- Les exercices sont affichés en deux colonnes, avec le champ de saisie placé
+  juste après le signe égal (`4 × 8 = [ ]`).
 - Chaque exercice dispose d'un champ numérique avec clavier numérique sur mobile.
 - **Entrée** passe à l'exercice suivant ; sur le dernier champ, le focus va au
   bouton **Corriger**.
