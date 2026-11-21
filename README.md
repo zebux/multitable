@@ -54,6 +54,8 @@ opérations distinctes et peuvent toutes deux apparaître.
 
 Les boutons **Recommencer** et **Retour à la configuration** sont toujours
 disponibles. Recommencer génère une nouvelle série avec les mêmes paramètres.
+Le bouton **Réinitialiser**, placé à côté de **Corriger**, revient à la page de
+configuration et restaure les valeurs initiales : tables 1 à 10 et 20 exercices.
 
 ## Fichiers
 

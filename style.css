@@ -671,6 +671,16 @@ legend {
   max-width: 34rem;
 }
 
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.action-buttons .button {
+  min-width: 13rem;
+}
+
 .check-button {
   min-width: 14rem;
 }
@@ -719,7 +729,11 @@ legend {
     align-items: stretch;
   }
 
-  .check-button {
+  .action-buttons {
+    width: 100%;
+  }
+
+  .action-buttons .button {
     width: 100%;
   }
 }

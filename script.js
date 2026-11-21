@@ -17,6 +17,7 @@
   const MAX_MULTIPLIER = 10;
   const MIN_OPERATIONS = 10;
   const MAX_OPERATIONS = 200;
+  const DEFAULT_OPERATION_COUNT = 20;
   const MAX_GENERATION_ATTEMPTS = 12;
 
   /* ------------------------------------------------------------------------
@@ -43,6 +44,7 @@
   const exerciseList = document.getElementById("exercise-list");
   const restartButton = document.getElementById("restart-button");
   const backButton = document.getElementById("back-button");
+  const resetButton = document.getElementById("reset-button");
   const checkButton = document.getElementById("check-button");
   const correctionHint = document.getElementById("correction-hint");
 
@@ -368,6 +370,25 @@
     viewSubtitle.textContent = "Choisissez vos tables et générez une série d'exercices.";
     scrollToTop();
     generateButton.focus();
+  }
+
+  /**
+   * Réinitialise le formulaire (tables 1-10, 20 exercices) et revient à la configuration.
+   * Le bouton "Retour à la configuration" conserve quant à lui les paramètres choisis.
+   */
+  function resetConfiguration() {
+    getAllTableCheckboxes().forEach((input) => {
+      input.checked = Number(input.value) <= LAST_BASIC_TABLE;
+    });
+
+    advancedTables.hidden = true;
+    advancedToggle.setAttribute("aria-expanded", "false");
+    advancedToggle.textContent = "Afficher les tables avancées";
+    operationCountInput.value = String(DEFAULT_OPERATION_COUNT);
+
+    updateSelectionCount();
+    clearConfigError();
+    showConfigView();
   }
 
   /* ------------------------------------------------------------------------
@@ -720,6 +741,7 @@
       }
     });
     backButton.addEventListener("click", showConfigView);
+    resetButton.addEventListener("click", resetConfiguration);
   }
 
   init();
